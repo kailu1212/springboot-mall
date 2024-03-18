@@ -13,13 +13,13 @@ import java.util.Map;
 
 @Component
 public class ProductDaoImpl implements ProductDao {
-
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public Product getProductById(Integer productId) {
-        String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, " +
+        String sql = "SELECT product_id, product_name, category," +
+                "image_url, price, stock, description, " +
                 "created_date, last_modified_date " +
                 "FROM product WHERE product_id = :productId";
 
