@@ -1,5 +1,6 @@
 package com.lyonlu.springbootmall.dao.impl;
 
+import com.lyonlu.springbootmall.constant.ProductCategory;
 import com.lyonlu.springbootmall.dao.ProductDao;
 import com.lyonlu.springbootmall.dto.ProductRequest;
 import com.lyonlu.springbootmall.model.Product;
@@ -21,6 +22,17 @@ import java.util.Map;
 public class ProductDaoImpl implements ProductDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public List<Product> getProducts() {
+
+        String sql = "SELECT product_id, product_name, category, " +
+                "image_url, price, stock, description, " +
+                "created_date, last_modified_date FROM product";
+        Map<String, Object> map = new HashMap<>();
+        List <Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
+        return productList;
+    }
 
     @Override
     public Product getProductById(Integer productId) {
