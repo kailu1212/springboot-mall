@@ -1,8 +1,10 @@
 package com.lyonlu.springbootmall.controller;
 
+import com.lyonlu.springbootmall.constant.ProductCategory;
 import com.lyonlu.springbootmall.dto.ProductRequest;
 import com.lyonlu.springbootmall.model.Product;
 import com.lyonlu.springbootmall.service.ProductService;
+import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
+                                                     @RequestParam(required = false) String search){
 
-        List<Product> productList = productService.getProducts();
+        List<Product> productList = productService.getProducts(category, search);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 
 
