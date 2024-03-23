@@ -1,7 +1,7 @@
 package com.lyonlu.springbootmall.service.impl;
 
-import com.lyonlu.springbootmall.constant.ProductCategory;
 import com.lyonlu.springbootmall.dao.ProductDao;
+import com.lyonlu.springbootmall.dto.ProductQueryParams;
 import com.lyonlu.springbootmall.dto.ProductRequest;
 import com.lyonlu.springbootmall.model.Product;
 import com.lyonlu.springbootmall.service.ProductService;
@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override
