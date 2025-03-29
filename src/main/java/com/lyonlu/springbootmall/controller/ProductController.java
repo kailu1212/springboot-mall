@@ -2,6 +2,7 @@ package com.lyonlu.springbootmall.controller;
 
 
 import com.lyonlu.springbootmall.constant.ProductCategory;
+import com.lyonlu.springbootmall.dto.ProductQueryParams;
 import com.lyonlu.springbootmall.dto.ProductRequest;
 import com.lyonlu.springbootmall.model.Product;
 import com.lyonlu.springbootmall.service.ProductService;
@@ -22,10 +23,22 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List <Product>> getProducuts(
+            // 查詢條件 Filtering
             @RequestParam(required = false) ProductCategory category,
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+
+            // 排序 Sorting
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            @RequestParam(defaultValue = "desc") String sort
     ){
-        List<Product> productList =  productService.getProducts(category, search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+        productQueryParams.setOrderBy(orderBy);
+        productQueryParams.setSort(sort);
+
+        List<Product> productList =  productService.getProducts(productQueryParams);
+
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
