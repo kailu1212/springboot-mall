@@ -3,6 +3,7 @@ package com.lyonlu.springbootmall.util;
 import java.util.List;
 
 public class Page<T> {
+
     private Integer limit;
     private Integer offset;
     private Integer total;

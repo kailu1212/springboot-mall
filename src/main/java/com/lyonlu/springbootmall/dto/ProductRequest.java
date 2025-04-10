@@ -3,7 +3,6 @@ package com.lyonlu.springbootmall.dto;
 import com.lyonlu.springbootmall.constant.ProductCategory;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 public class ProductRequest {
 

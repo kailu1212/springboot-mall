@@ -27,7 +27,7 @@ public class ProductControllerTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-//    查詢商品
+    //    查詢商品
     @Test
     public void getProduct_success() throws Exception{
 
@@ -180,7 +180,7 @@ public class ProductControllerTest {
                 .andExpect(status().is(404 ));
 
     }
-//    刪除商品
+    //    刪除商品
     @Transactional
     @Test
     public void deleteProduct_success() throws Exception{
