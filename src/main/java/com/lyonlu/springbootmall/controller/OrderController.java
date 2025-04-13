@@ -1,6 +1,7 @@
 package com.lyonlu.springbootmall.controller;
 
 import com.lyonlu.springbootmall.dto.CreateOrderRequest;
+import com.lyonlu.springbootmall.model.Order;
 import com.lyonlu.springbootmall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,10 @@ public class OrderController {
                                          @RequestBody @Valid CreateOrderRequest createOrderRequest) {
 
         Integer orderId = orderService.createOrder(userId,createOrderRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+
+         Order order = orderService.getOrderById(orderId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
 }

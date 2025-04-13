@@ -4,6 +4,7 @@ import com.lyonlu.springbootmall.dao.OrderDao;
 import com.lyonlu.springbootmall.dao.ProductDao;
 import com.lyonlu.springbootmall.dto.BuyItem;
 import com.lyonlu.springbootmall.dto.CreateOrderRequest;
+import com.lyonlu.springbootmall.model.Order;
 import com.lyonlu.springbootmall.model.OrderItem;
 import com.lyonlu.springbootmall.model.Product;
 import com.lyonlu.springbootmall.service.OrderService;
@@ -23,6 +24,17 @@ public class OrderServiceImpl implements OrderService {
     private ProductDao productDao;
 
 
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+
+        return order;
+    }
+
     @Transactional
     @Override
     public Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest) {
@@ -38,16 +50,12 @@ public class OrderServiceImpl implements OrderService {
 
             // 轉換 BuyItem to OrderItem
             OrderItem orderItem = new OrderItem();
-            orderItem.setProduct_id(buyItem.getProductId());
+            orderItem.setProductId(product.getProductId());
             orderItem.setQuantity(buyItem.getQuantity());
             orderItem.setAmount(amount);
 
             orderItemList.add(orderItem);
         }
-
-
-
-
 
         // 創建訂單
         Integer orderId = orderDao.createOrder(userId, totalAmount);

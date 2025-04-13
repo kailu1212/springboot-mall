@@ -1,52 +1,62 @@
 package com.lyonlu.springbootmall.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 
-    private Integer order_id;
-    private Integer user_id;
-    private Integer total_amount;
-    private Date create_time;
-    private Date last_update_time;
+    private Integer orderId;
+    private Integer userId;
+    private Integer totalAmount;
+    private Date createdDate;
+    private Date lastModifiedDate;
+    private List<OrderItem> orderItemList;
 
-    public Date getCreate_time() {
-        return create_time;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
-    public Integer getOrder_id() {
-        return order_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setTotalAmount(Integer totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Integer getTotal_amount() {
-        return total_amount;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setTotal_amount(Integer total_amount) {
-        this.total_amount = total_amount;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Date getLast_update_time() {
-        return last_update_time;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setLast_update_time(Date last_update_time) {
-        this.last_update_time = last_update_time;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
     }
 }
