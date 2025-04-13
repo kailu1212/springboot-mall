@@ -25,7 +25,7 @@ public class OrderController {
 
         Integer orderId = orderService.createOrder(userId,createOrderRequest);
 
-         Order order = orderService.getOrderById(orderId);
+        Order order = orderService.getOrderById(orderId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
