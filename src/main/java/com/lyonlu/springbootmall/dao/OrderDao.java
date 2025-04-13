@@ -1,5 +1,6 @@
 package com.lyonlu.springbootmall.dao;
 
+import com.lyonlu.springbootmall.dto.OrderQueryParams;
 import com.lyonlu.springbootmall.model.Order;
 import com.lyonlu.springbootmall.model.OrderItem;
 
@@ -14,4 +15,8 @@ public interface OrderDao {
     Integer createOrder(Integer userId, Integer totalAmount);
 
     void createOrderItems(Integer orderId, List<OrderItem> orderItemList);
+
+    Integer countOrder(OrderQueryParams orderQueryParams);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
 }

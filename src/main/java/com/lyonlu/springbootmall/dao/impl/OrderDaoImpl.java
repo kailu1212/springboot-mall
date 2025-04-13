@@ -1,6 +1,8 @@
 package com.lyonlu.springbootmall.dao.impl;
 
 import com.lyonlu.springbootmall.dao.OrderDao;
+import com.lyonlu.springbootmall.dto.OrderQueryParams;
+import com.lyonlu.springbootmall.dto.ProductQueryParams;
 import com.lyonlu.springbootmall.model.Order;
 import com.lyonlu.springbootmall.model.OrderItem;
 import com.lyonlu.springbootmall.rowmapper.OrderItemRowMapper;
@@ -24,6 +26,44 @@ public class OrderDaoImpl implements OrderDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private OrderDao orderDao;
+
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT COUNT(*) FROM `order` where 1=1";
+        Map<String, Object> map =  new HashMap();
+
+        // 查詢條件
+        sql = addFiltering(sql, map, orderQueryParams);
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+
+        return total;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date FROM `order` WHERE 1=1";
+
+        Map<String, Object> map =  new HashMap();
+
+        // 查詢條件
+        sql = addFiltering(sql, map, orderQueryParams);
+
+        // 排序
+        sql = sql + " ORDER BY created_date DESC";
+
+        // 分頁
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit", orderQueryParams.getLimit());
+        map.put("offset", orderQueryParams.getOffset());
+
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql, map, new OrderRowMapper());
+
+        return orderList;
+    }
+
 
 
     @Override
@@ -121,5 +161,36 @@ public class OrderDaoImpl implements OrderDao {
         }
         namedParameterJdbcTemplate.batchUpdate(sql, parameterSource);
 
+    }
+
+
+    // 僅有這個 class 可以使用這個方法，使用 private
+    private String addFiltering(String sql, Map<String, Object> map, ProductQueryParams productQueryParams) {
+
+        // 查詢條件
+        if (productQueryParams.getCategory() != null) {
+            sql =  sql + " AND category = :category";
+            //category為Enum類型，name()將Enum,轉換為String
+            map.put("category", productQueryParams.getCategory().name());
+        }
+
+        if (productQueryParams.getSearch() != null) {
+            sql =  sql + " AND product_name LIKE :search";
+            map.put("search" , "%" + productQueryParams.getSearch() + "%");
+        }
+
+        return sql;
+    }
+
+
+    private String addFiltering(String sql, Map<String, Object> map, OrderQueryParams orderQueryParams) {
+
+        // 查詢條件
+        if (orderQueryParams.getUserId() != null) {
+            sql =  sql + " AND user_id = :userId";
+            map.put("userId", orderQueryParams.getUserId());
+        }
+
+        return sql;
     }
 }
